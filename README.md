@@ -15,8 +15,7 @@ The following steps should get you set up for running Selenium tests locally on 
 1. Clone this repository to your local machine
 2. Import depenecies (available in pom.xml file)
 3. Go-to CalculatorFunctionality.java class
-4. Modify `credentialsPath` property in `config.yml` to point to `credentials.xml` file from cloned `selenium-config` repository
-5. Click the green button parallel to '@test()' :)
+4. Click the green button parallel to '@test()' :)
 
 ### Browsers
 
