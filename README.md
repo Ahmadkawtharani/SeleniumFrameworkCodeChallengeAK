@@ -17,6 +17,12 @@ The following steps should get you set up for running Selenium tests locally on 
 3. Go-to CalculatorFunctionality.java class
 4. Click the green button parallel to '@test()' :)
 
+## Approach
+
+The online calculator is embeded in a canvas thus unable to locate any of the elements, a turn around has been made by sending key strokes directly from keyboard (including the clear aka CE button).
+At the start of the test we take a screenshot of the canvas and save it as String base64 -> We do our calculations -> then we take another screenshot and save it as String base64 and compare both Strings.
+Case comparison returns false (images are different-expected), we consider the test as pass, else fail.
+
 ### Browsers
 
 Compatible with:
