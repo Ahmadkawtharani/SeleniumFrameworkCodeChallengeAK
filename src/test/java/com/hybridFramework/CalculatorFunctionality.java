@@ -5,8 +5,6 @@ import com.hybridFramework.helper.Logger.LoggerHelper;
 import com.hybridFramework.testBase.TestBase;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.annotations.Test;
 
 public class CalculatorFunctionality extends TestBase {
@@ -25,11 +23,15 @@ public class CalculatorFunctionality extends TestBase {
 
         JavascriptExecutor js = (JavascriptExecutor) driver;
 
+        calculatorHomePage.calculateSubtractionExpectedResult(driver);
+
         //Take a screenshot of canvas before entering any values
         String initialStateScreenshot = "var canvas=document.getElementById('canvas'); " +
                 "var initialDataURL = canvas.toDataURL(); return initialDataURL;";
         String initialState = (String) js.executeScript(initialStateScreenshot);
 
+        //clear expected result
+        calculatorHomePage.clearResult(driver);
         //Entering first random input
         calculatorHomePage.fillFirstInput(driver);
         //Clicking subtract button
@@ -68,11 +70,19 @@ public class CalculatorFunctionality extends TestBase {
 
         JavascriptExecutor js = (JavascriptExecutor) driver;
 
+        calculatorHomePage.calculateDivisionExpectedResult(driver);
+        try {
+            Thread.sleep(5000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         //Take a screenshot of canvas before entering any values
         String initialStateScreenshot = "var canvas=document.getElementById('canvas'); " +
                 "var initialDataURL = canvas.toDataURL(); return initialDataURL;";
         String initialState = (String) js.executeScript(initialStateScreenshot);
 
+        //clear expected result
+        calculatorHomePage.clearResult(driver);
         //Entering first random input
         calculatorHomePage.fillFirstInput(driver);
         //Clicking divide button
@@ -81,6 +91,11 @@ public class CalculatorFunctionality extends TestBase {
         calculatorHomePage.fillSecondInput(driver);
         //Click Enter button
         calculatorHomePage.clickEnter(driver);
+        try {
+            Thread.sleep(3000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
         //Take a screenshot of canvas after doing the calculations and comparing initialStateScreenshot base64 value to second screenshot
         String finalStateScreenshot = "  var finalDataURL = canvas.toDataURL(); " +

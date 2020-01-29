@@ -17,7 +17,8 @@ import java.util.Random;
 public class CalculatorHomePage extends TestBase {
 
     Logger log = LoggerHelper.getLogger(LoggerHelper.class);
-
+    Double firstInput = Double.valueOf(new Random().nextInt(11) + 20);
+    Double secondInput = Double.valueOf(new Random().nextInt(11) + 20);
     public CalculatorHomePage(WebDriver driver) {
 
         WebDriverWait wait = new WebDriverWait(driver, 10);
@@ -42,16 +43,28 @@ public class CalculatorHomePage extends TestBase {
 
     public void fillFirstInput(WebDriver driver){
 
-        log.info("Filling first input");
-        String firstInput = String.valueOf(new Random().nextInt(11) + 20);
-        new Actions(driver).sendKeys(firstInput).perform();
+        log.info("Filling first input: " + firstInput);
+        new Actions(driver).sendKeys(String.valueOf(firstInput)).perform();
     }
 
     public void fillSecondInput(WebDriver driver){
 
-        log.info("Filling second input");
-        String secondInput = String.valueOf(new Random().nextInt(11) + 20);
-        new Actions(driver).sendKeys(secondInput).perform();
+        log.info("Filling first input: " + secondInput);
+        new Actions(driver).sendKeys(String.valueOf(secondInput)).perform();
+    }
+
+    public void calculateSubtractionExpectedResult(WebDriver driver){
+
+        Double finalResultSubtraction = firstInput - secondInput;
+        log.info("Expected result is: " + finalResultSubtraction);
+        new Actions(driver).sendKeys(String.valueOf(finalResultSubtraction)).perform();
+    }
+
+    public void calculateDivisionExpectedResult(WebDriver driver){
+
+        Double finalResultDivision = Double.valueOf(firstInput / secondInput);
+        log.info("Expected result is: " + finalResultDivision);
+        new Actions(driver).sendKeys(String.valueOf(finalResultDivision)).perform();
     }
 
     public void subtractValues(WebDriver driver){
