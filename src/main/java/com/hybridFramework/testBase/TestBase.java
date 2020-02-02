@@ -40,7 +40,7 @@ import com.relevantcodes.extentreports.LogStatus;
 
 public class TestBase {
 	
-	public static final Logger logger = Logger.getLogger(TestBase.class.getName());
+	public static final Logger log = Logger.getLogger(TestBase.class.getName());
 	public WebDriver driver;
 	public static Properties OR;
 	public File f1;
@@ -68,6 +68,7 @@ public class TestBase {
 		WaitHelper waitHelper = new WaitHelper(driver);
 		waitHelper.setImplicitWait(config.getImplicitWait(), TimeUnit.SECONDS);
 		waitHelper.setPageLoadTimeout(config.getPageLoadTimeOut(), TimeUnit.SECONDS);
+		driver.get("https://www.online-calculator.com/full-screen-calculator/");
 	}
 	
 	//3.0.1
@@ -109,17 +110,17 @@ public class TestBase {
 		f1 = new File(System.getProperty("user.dir")+"/src/main/java/com/hybridFramework/config/config.properties");
 		file = new FileInputStream(f1);
 		OR.load(file);
-		logger.info("loading config.properties");
+		log.info("loading config.properties");
 		
 		f1 = new File(System.getProperty("user.dir")+"/src/main/java/com/hybridFramework/config/or.properties");
 		file = new FileInputStream(f1);
 		OR.load(file);
-		logger.info("loading or.properties");
+		log.info("loading or.properties");
 		
 		f1 = new File(System.getProperty("user.dir")+"/src/main/java/com/hybridFramework/properties/homepage.properties");
 		file = new FileInputStream(f1);
 		OR.load(file);
-		logger.info("loading homepage.properties");
+		log.info("loading homepage.properties");
 	}
 	
 	public String getScreenShot(String imageName) throws IOException{

@@ -1,8 +1,6 @@
 package com.hybridFramework.PageObject;
 
-import com.hybridFramework.helper.Logger.LoggerHelper;
 import com.hybridFramework.testBase.TestBase;
-import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
@@ -16,9 +14,11 @@ import java.util.Random;
 
 public class CalculatorHomePage extends TestBase {
 
-    Logger log = LoggerHelper.getLogger(LoggerHelper.class);
-    Double firstInput = Double.valueOf(new Random().nextInt(11) + 20);
-    Double secondInput = Double.valueOf(new Random().nextInt(11) + 20);
+    Integer firstInputSubtraction = new Random().nextInt(11) + 20;
+    Integer secondInputSubtraction = new Random().nextInt(11);
+    Double firstInputDivision = Double.valueOf(new Random().nextInt(10) + 1);
+    Double secondInputDivision = Double.valueOf(new Random().nextInt(10) + 1);
+
     public CalculatorHomePage(WebDriver driver) {
 
         WebDriverWait wait = new WebDriverWait(driver, 10);
@@ -41,30 +41,48 @@ public class CalculatorHomePage extends TestBase {
         driver.switchTo().defaultContent();
     }
 
-    public void fillFirstInput(WebDriver driver){
+    public void fillFirstInput(WebDriver driver, String operation) throws InterruptedException {
 
-        log.info("Filling first input: " + firstInput);
-        new Actions(driver).sendKeys(String.valueOf(firstInput)).perform();
+        if(operation == "subtraction"){
+            log.info("Filling first subtraction input: " + firstInputSubtraction);
+            new Actions(driver).sendKeys(String.valueOf(firstInputSubtraction)).perform();
+            Thread.sleep(1000);
+        }
+        else if (operation == "division"){
+            log.info("Filling first division input: " + firstInputDivision);
+            new Actions(driver).sendKeys(String.valueOf(firstInputDivision)).perform();
+            Thread.sleep(1000);
+        }
     }
 
-    public void fillSecondInput(WebDriver driver){
+    public void fillSecondInput(WebDriver driver, String operation) throws InterruptedException {
 
-        log.info("Filling first input: " + secondInput);
-        new Actions(driver).sendKeys(String.valueOf(secondInput)).perform();
+        if(operation == "subtraction"){
+            log.info("Filling second subtraction input: " + secondInputSubtraction);
+            new Actions(driver).sendKeys(String.valueOf(secondInputSubtraction)).perform();
+            Thread.sleep(1000);
+        }
+        else if (operation == "division"){
+            log.info("Filling second division input: " + secondInputDivision);
+            new Actions(driver).sendKeys(String.valueOf(secondInputDivision)).perform();
+            Thread.sleep(1000);
+        }
     }
 
-    public void calculateSubtractionExpectedResult(WebDriver driver){
+    public void calculateSubtractionExpectedResult(WebDriver driver) throws InterruptedException {
 
-        Double finalResultSubtraction = firstInput - secondInput;
-        log.info("Expected result is: " + finalResultSubtraction);
+        Integer finalResultSubtraction = firstInputSubtraction - secondInputSubtraction;
+        log.info("Subtraction expected result is: " + finalResultSubtraction);
         new Actions(driver).sendKeys(String.valueOf(finalResultSubtraction)).perform();
+        Thread.sleep(1000);
     }
 
-    public void calculateDivisionExpectedResult(WebDriver driver){
+    public void calculateDivisionExpectedResult(WebDriver driver) throws InterruptedException {
 
-        Double finalResultDivision = Double.valueOf(firstInput / secondInput);
-        log.info("Expected result is: " + finalResultDivision);
+        Double finalResultDivision = Double.valueOf(firstInputDivision / secondInputDivision);
+        log.info("Division expected result is: " + finalResultDivision);
         new Actions(driver).sendKeys(String.valueOf(finalResultDivision)).perform();
+        Thread.sleep(1000);
     }
 
     public void subtractValues(WebDriver driver){
@@ -79,16 +97,19 @@ public class CalculatorHomePage extends TestBase {
         new Actions(driver).sendKeys(Keys.DIVIDE).perform();
     }
 
-    public void clearResult(WebDriver driver){
+    public void clearResult(WebDriver driver) throws InterruptedException {
 
         log.info("Click C to clear result");
         new Actions(driver).sendKeys("c").perform();
+        Thread.sleep(1000);
+
     }
 
-    public void clickEnter(WebDriver driver){
+    public void clickEnter(WebDriver driver) throws InterruptedException {
 
         log.info("Click 'equal' button");
         new Actions(driver).sendKeys(Keys.ENTER).perform();
+        Thread.sleep(1000);
     }
 
 }

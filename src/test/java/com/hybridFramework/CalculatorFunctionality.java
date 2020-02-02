@@ -1,68 +1,70 @@
 package com.hybridFramework;
 
 import com.hybridFramework.PageObject.CalculatorHomePage;
-import com.hybridFramework.helper.Logger.LoggerHelper;
 import com.hybridFramework.testBase.TestBase;
-import org.apache.log4j.Logger;
 import org.openqa.selenium.JavascriptExecutor;
+import org.testng.Assert;
 import org.testng.annotations.Test;
 
 public class CalculatorFunctionality extends TestBase {
 
-    Logger log = LoggerHelper.getLogger(LoggerHelper.class);
-
     @Test()
-    public void testCalculatorSubtraction() {
+    public void testCalculatorSubtraction() throws InterruptedException {
 
-        //Launching chrome and redirecting to URL
-        driver.get("https://www.online-calculator.com/full-screen-calculator/");
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+
         CalculatorHomePage calculatorHomePage = new CalculatorHomePage(driver);
 
         //Switching to canvas frame
         calculatorHomePage.switchToFrame(driver);
 
-        JavascriptExecutor js = (JavascriptExecutor) driver;
-
         calculatorHomePage.calculateSubtractionExpectedResult(driver);
 
         //Take a screenshot of canvas before entering any values
-        String initialStateScreenshot = "var canvas=document.getElementById('canvas'); " +
+        String initialStateScreenshot = "var canvas = document.getElementById('canvas'); " +
                 "var initialDataURL = canvas.toDataURL(); return initialDataURL;";
         String initialState = (String) js.executeScript(initialStateScreenshot);
 
         //clear expected result
         calculatorHomePage.clearResult(driver);
+
         //Entering first random input
-        calculatorHomePage.fillFirstInput(driver);
+        calculatorHomePage.fillFirstInput(driver, "subtraction");
+
         //Clicking subtract button
         calculatorHomePage.subtractValues(driver);
+
         //Entering second random input
-        calculatorHomePage.fillSecondInput(driver);
+        calculatorHomePage.fillSecondInput(driver, "subtraction");
+
         //Click Enter button
         calculatorHomePage.clickEnter(driver);
 
         //Take a screenshot of canvas after doing the calculations and comparing initialStateScreenshot base64 value to second screenshot
-        String finalStateScreenshot = "  var finalDataURL = canvas.toDataURL(); " +
-                "if('" + initialState + "'!=finalDataURL.toString()) return true; else return false;";
-        Boolean finalResult = (Boolean) js.executeScript(finalStateScreenshot);
+        String finalStateScreenshot = "var canvas = document.getElementById('canvas'); " +
+                "var finalDataURL = canvas.toDataURL(); return finalDataURL;";
+        String finalState = (String) js.executeScript(finalStateScreenshot);
 
-        //Test is successful if initial screenshot != final screenshot else pass
+        String compareScreenshots = "if('" + initialState + "'== '" + finalState + "'){ return true;} else{ return false;}";
+
+        Boolean finalResult = (Boolean) js.executeScript(compareScreenshots);
+
+        Assert.assertTrue(finalResult,"Initial and final screenshots match");
+
+        //Test is successful if initial screenshot = final screenshot else fail
         if (finalResult) {
-            log.info("Success!! Initial and Final calculator state does not match");
+            log.info("Success!! Initial and Final calculator match");
         } else {
-            log.info("Fail!! Initial and Final calculator state still match");
+            log.info("Fail!! Initial and Final calculator state do not match");
         }
 
         calculatorHomePage.switchToDefault(driver);
-
-        endTest();
+        driver.close();
     }
 
     @Test()
-    public void testCalculatorDivision() {
+    public void testCalculatorDivision() throws InterruptedException {
 
-        //Launching chrome and redirecting to URL
-        driver.get("https://www.online-calculator.com/full-screen-calculator/");
         CalculatorHomePage calculatorHomePage = new CalculatorHomePage(driver);
 
         //Switching to canvas frame
@@ -73,48 +75,51 @@ public class CalculatorFunctionality extends TestBase {
         calculatorHomePage.calculateDivisionExpectedResult(driver);
 
         //Take a screenshot of canvas before entering any values
-        String initialStateScreenshot = "var canvas=document.getElementById('canvas'); " +
+        String initialStateScreenshot = "var canvas = document.getElementById('canvas'); " +
                 "var initialDataURL = canvas.toDataURL(); return initialDataURL;";
         String initialState = (String) js.executeScript(initialStateScreenshot);
 
         //clear expected result
         calculatorHomePage.clearResult(driver);
+
         //Entering first random input
-        calculatorHomePage.fillFirstInput(driver);
+        calculatorHomePage.fillFirstInput(driver, "division");
+
         //Clicking divide button
         calculatorHomePage.divideValues(driver);
+
         //Entering second random input
-        calculatorHomePage.fillSecondInput(driver);
+        calculatorHomePage.fillSecondInput(driver, "division");
+
         //Click Enter button
         calculatorHomePage.clickEnter(driver);
-        try {
-            Thread.sleep(3000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
 
         //Take a screenshot of canvas after doing the calculations and comparing initialStateScreenshot base64 value to second screenshot
-        String finalStateScreenshot = "  var finalDataURL = canvas.toDataURL(); " +
-                "if('" + initialState + "'!=finalDataURL.toString()) return true; else return false;";
-        Boolean finalResult = (Boolean) js.executeScript(finalStateScreenshot);
+        String finalStateScreenshot = "var canvas = document.getElementById('canvas'); " +
+                "var finalDataURL = canvas.toDataURL(); return finalDataURL;";
+        String finalState = (String) js.executeScript(finalStateScreenshot);
 
-        //Test is successful if initial screenshot != final screenshot else pass
+        String compareScreenshots = "if('" + initialState + "'== '" + finalState + "'){ return true;} else{ return false;}";
+
+        Boolean finalResult = (Boolean) js.executeScript(compareScreenshots);
+
+        Assert.assertTrue(finalResult,"Initial and final screenshots match");
+
+        //Test is successful if initial screenshot = final screenshot else fail
         if (finalResult) {
-            log.info("Success!! Initial and Final calculator state does not match");
+            log.info("Success!! Initial and Final calculator match");
         } else {
-            log.info("Fail!! Initial and Final calculator state still match");
+            log.info("Fail!! Initial and Final calculator state do not match");
         }
 
         calculatorHomePage.switchToDefault(driver);
-        endTest();
+        driver.close();
     }
 
 
     @Test()
-    public void testCalculatorClear() {
+    public void testCalculatorClear() throws InterruptedException {
 
-        //Launching chrome and redirecting to URL
-        driver.get("https://www.online-calculator.com/full-screen-calculator/");
         CalculatorHomePage calculatorHomePage = new CalculatorHomePage(driver);
 
         //Switching to canvas frame
@@ -128,24 +133,31 @@ public class CalculatorFunctionality extends TestBase {
         String initialState = (String) js.executeScript(initialStateScreenshot);
 
         //Entering first random input
-        calculatorHomePage.fillFirstInput(driver);
+        calculatorHomePage.fillFirstInput(driver, "subtraction");
         //Clicking clear button
         calculatorHomePage.clearResult(driver);
 
         //Take a screenshot of canvas after doing the calculations and comparing initialStateScreenshot base64 value to second screenshot
-        String finalStateScreenshot = "  var finalDataURL = canvas.toDataURL(); " +
-                "if('" + initialState + "'!=finalDataURL.toString()) return true; else return false;";
-        Boolean finalResult = (Boolean) js.executeScript(finalStateScreenshot);
+        String finalStateScreenshot = "var canvas = document.getElementById('canvas'); " +
+                "var finalDataURL = canvas.toDataURL(); return finalDataURL;";
+        String finalState = (String) js.executeScript(finalStateScreenshot);
 
-        //Test is successful if initial screenshot != final screenshot else pass
+        String compareScreenshots = "if('" + initialState + "'== '" + finalState + "'){ return true;} else{ return false;}";
+
+        Boolean finalResult = (Boolean) js.executeScript(compareScreenshots);
+
+        Assert.assertTrue(finalResult,"Initial and final screenshots match");
+
+        //Test is successful if initial screenshot = final screenshot else fail
         if (finalResult) {
-            log.info("Success!! Initial and Final calculator state does not match");
+            log.info("Success!! Initial and Final calculator match");
         } else {
-            log.info("Fail!! Initial and Final calculator state still match");
+            log.info("Fail!! Initial and Final calculator state do not match");
         }
 
         calculatorHomePage.switchToDefault(driver);
-        endTest();
+        driver.close();
+
     }
 }
 
