@@ -71,11 +71,7 @@ public class CalculatorFunctionality extends TestBase {
         JavascriptExecutor js = (JavascriptExecutor) driver;
 
         calculatorHomePage.calculateDivisionExpectedResult(driver);
-        try {
-            Thread.sleep(5000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+
         //Take a screenshot of canvas before entering any values
         String initialStateScreenshot = "var canvas=document.getElementById('canvas'); " +
                 "var initialDataURL = canvas.toDataURL(); return initialDataURL;";

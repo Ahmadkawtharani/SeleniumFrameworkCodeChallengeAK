@@ -1,0 +1,14 @@
+2020-01-29 15:51:58 INFO  TestBase:112 - loading config.properties
+2020-01-29 15:51:58 INFO  TestBase:117 - loading or.properties
+2020-01-29 15:51:58 INFO  TestBase:122 - loading homepage.properties
+2020-01-29 15:52:04 INFO  WaitHelper:29 - 20
+2020-01-29 15:52:04 INFO  WaitHelper:34 - 240
+2020-01-29 15:52:11 INFO  LoggerHelper:33 - Switching to iFrame
+2020-01-29 15:52:11 INFO  LoggerHelper:59 - Expected result is: -1.0
+2020-01-29 15:52:11 INFO  LoggerHelper:85 - Click C to clear result
+2020-01-29 15:52:11 INFO  LoggerHelper:46 - Filling first input: 26.0
+2020-01-29 15:52:11 INFO  LoggerHelper:73 - Subtracting first input by second input
+2020-01-29 15:52:11 INFO  LoggerHelper:52 - Filling first input: 27.0
+2020-01-29 15:52:11 INFO  LoggerHelper:91 - Click 'equal' button
+2020-01-29 15:52:11 INFO  LoggerHelper:53 - Success!! Initial and Final calculator state does not match
+2020-01-29 15:52:11 INFO  LoggerHelper:40 - Switching to default frame
